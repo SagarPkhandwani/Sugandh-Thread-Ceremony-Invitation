@@ -49,7 +49,7 @@ input{font:inherit;font-size:4cqw;padding:2.4cqw 4cqw;border-radius:40px;border:
 <body>
 <div id="bgb"></div><div id="sp"></div>
 <div id="vp" class="bx"><div id="cam"></div><div id="nt"></div><div id="sh"></div><div id="ray"></div><canvas id="dl"></canvas></div>
-<button id="snd" aria-label="संगीत">♪</button>
+<button id="snd" type="button" aria-label="संगीत चलाएँ" aria-pressed="false" title="संगीत चलाएँ">♪</button>
 <div id="door"><div id="dr" class="bx"><div class="lv"><div class="cy"></div><div class="lf"></div><div class="lf r"></div></div>
 <div class="tx"><p style="letter-spacing:.2em">॥ श्री गणेशाय नमः ॥</p><p>सहर्ष आमंत्रित करते हैं</p><h1>यज्ञोपवीत संस्कार</h1><p>एवं मंगल उत्सव</p><p style="margin-top:1cqw">सुगंध परिवार</p></div>
 <div class="ht">✦ द्वार खोलने हेतु स्पर्श करें ✦</div></div></div>
@@ -104,13 +104,17 @@ function sh(){const n=$("gn").value.trim();$("sh2").href="https://wa.me/?text="+
 const cv=$("dl"),x=cv.getContext("2d"),vp=$("vp");let W,H;const rs=()=>{W=cv.width=vp.clientWidth;H=cv.height=vp.clientHeight};rs();addEventListener("resize",rs);
 const P=Array.from({length:45},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.4+.8,v:Math.random()*.6+.25,a:Math.random()*6}));
 (function d(){x.clearRect(0,0,W,H);P.forEach(p=>{p.y+=p.v;p.a+=.03;p.x+=Math.sin(p.a)*.6;if(p.y>H+8){p.y=-8;p.x=Math.random()*W}const pt=p.r>1.8;x.beginPath();x.fillStyle=pt?"rgba(255,150,170,.8)":"rgba(255,225,140,.7)";x.ellipse(p.x,p.y,pt?p.r*2.2:p.r,p.r,p.a,0,7);x.fill()});requestAnimationFrame(d)})();
-/* sound */
-let A,on=0;
-function snd(){try{if(!A){A=new(window.AudioContext||window.webkitAudioContext)();const g=A.createGain();g.gain.value=0;g.connect(A.destination);A.g=g;[136.1,204.2,272.2,408.3].forEach((q,i)=>{const o=A.createOscillator();o.type=i?"sine":"triangle";o.frequency.value=q;const v=A.createGain();v.gain.value=.5/(i+1);o.connect(v);v.connect(g);o.start()})}
-on=!on;A.resume();A.g.gain.setTargetAtTime(on?.05:0,A.currentTime,.8);$("snd").classList.toggle("on",on)}catch(e){}}$("snd").onclick=snd;
-/* door opens, camera moves in */
+/* Original, gentle Indian instrumental melody. It plays only after the guest taps the music button. */
+let A,on=0,master,loopTimer=null,beatIndex=0,nextBeat=0;
+const notes=[523.25,587.33,659.25,783.99,880,783.99,659.25,587.33,659.25,783.99,880,1046.5,880,783.99,659.25,null,587.33,659.25,783.99,880,783.99,659.25,587.33,523.25,523.25,null,587.33,659.25,587.33,523.25,null,null];
+const beat=60/72;
+function flute(freq,at){const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.setValueAtTime(freq,at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(.22,at+.08);g.gain.setValueAtTime(.15,at+beat*.52);g.gain.exponentialRampToValueAtTime(.0001,at+beat*.94);o.connect(g);g.connect(master);o.start(at);o.stop(at+beat)}
+function pluck(freq,at){[1,2.76,5.4].forEach((part,i)=>{const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.setValueAtTime(freq*part,at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(.11/(i+1),at+.012);g.gain.exponentialRampToValueAtTime(.0001,at+.72);o.connect(g);g.connect(master);o.start(at);o.stop(at+.75)})}
+function stepMusic(){const now=A.currentTime;if(now+0.025<nextBeat)return;const at=now+.035,n=notes[beatIndex];if(n)flute(n,at);if(beatIndex%4===0)pluck(n||523.25,at);beatIndex=(beatIndex+1)%notes.length;nextBeat=at+beat}
+function snd(){try{if(!A){A=new(window.AudioContext||window.webkitAudioContext)();master=A.createGain();master.gain.value=0;master.connect(A.destination);[[130.81,.20],[196,.11],[261.63,.06]].forEach(([hz,vol])=>{const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.value=hz;g.gain.value=vol;o.connect(g);g.connect(master);o.start()})}if(A.state==='suspended')A.resume();on=!on;const btn=$('snd');btn.classList.toggle('on',!!on);btn.setAttribute('aria-pressed',String(!!on));btn.setAttribute('aria-label',on?'संगीत रोकें':'संगीत चलाएँ');btn.title=on?'संगीत रोकें':'संगीत चलाएँ';master.gain.cancelScheduledValues(A.currentTime);master.gain.setTargetAtTime(on?.36:0,A.currentTime,.22);if(on){nextBeat=A.currentTime+.08;stepMusic();loopTimer=setInterval(stepMusic,50)}else{clearInterval(loopTimer);loopTimer=null;beatIndex=0}}catch(e){on=0}}
+$('snd').onclick=snd;/* door opens, camera moves in */
 R.style.overflow="hidden";
-$("door").onclick=()=>{const d=$("door");d.classList.add("open");snd();setTimeout(()=>d.classList.add("zoom"),1600);setTimeout(()=>{op=1;R.style.overflow=""},3200);setTimeout(()=>d.classList.add("go"),3300);setTimeout(()=>d.remove(),4600)};
+$("door").onclick=()=>{const d=$("door");d.classList.add("open");setTimeout(()=>d.classList.add("zoom"),1600);setTimeout(()=>{op=1;R.style.overflow=""},3200);setTimeout(()=>d.classList.add("go"),3300);setTimeout(()=>d.remove(),4600)};
 </script>
 </body>
 </html>

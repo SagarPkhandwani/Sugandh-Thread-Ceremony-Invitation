@@ -30,7 +30,7 @@ h1,h2{font:400 7.6cqw/1.3 "Rozha One","Tiro Devanagari Hindi",serif;color:var(--
 .bt{display:inline-block;margin:1cqw;padding:2.4cqw 4.4cqw;border-radius:40px;border:1px solid var(--g);color:var(--m);text-decoration:none;background:rgba(96,22,34,.7);font:inherit;font-size:3.9cqw;cursor:pointer}.bt.p{background:linear-gradient(100deg,#a8740a,#e9c35a,#f7e08a);color:#3a0d0d}
 #cd{display:flex;gap:2cqw;margin:2cqw 0}#cd div{flex:1;border-radius:3cqw;background:linear-gradient(#7a1620,#3d0a10);color:var(--m);padding:2cqw 0}#cd b{display:block;font:400 7cqw/1.2 "Rozha One",serif}#cd small{font-size:3.2cqw;color:#f3dcae}
 input{font:inherit;font-size:4cqw;padding:2.4cqw 4cqw;border-radius:40px;border:1px solid var(--g);text-align:center;width:100%;background:rgba(255,253,245,.93);color:#4a1410}
-#snd{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:30;width:44px;height:44px;border-radius:50%;border:1px solid var(--g);background:#4a0f18d9;color:var(--g);font-size:20px;cursor:pointer}#snd.on{background:var(--g);color:#4a0f18}
+#snd{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:30;width:44px;height:44px;border-radius:50%;border:1px solid var(--g);background:#4a0f18d9;color:var(--g);font-size:20px;cursor:pointer}#snd.on{background:var(--g);color:#4a0f18}#musicCredit{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 66px);z-index:31;display:block;width:max-content;max-width:calc(100vw - 84px);padding:5px 8px;border:1px solid rgba(217,180,86,.6);border-radius:10px;background:#4a0f18d9;color:var(--m);font:10px/1.35 Arial,sans-serif;text-decoration:none}#musicCredit a{color:inherit;text-decoration:underline}
 #door{position:fixed;inset:0;z-index:50;background:#2a0e0a;cursor:pointer;transition:opacity 1.2s}#door.go{opacity:0}
 #dr{background:var(--d) center/cover;transform-origin:50% 63%;transition:transform 3s cubic-bezier(.5,0,.3,1)}
 #door.zoom #dr{transform:scale(3.4)}
@@ -49,7 +49,7 @@ input{font:inherit;font-size:4cqw;padding:2.4cqw 4cqw;border-radius:40px;border:
 <body>
 <div id="bgb"></div><div id="sp"></div>
 <div id="vp" class="bx"><div id="cam"></div><div id="nt"></div><div id="sh"></div><div id="ray"></div><canvas id="dl"></canvas></div>
-<button id="snd" type="button" aria-label="संगीत चलाएँ" aria-pressed="false" title="संगीत चलाएँ">♪</button>
+<button id="snd" type="button" aria-label="संगीत चलाएँ" aria-pressed="false" title="संगीत चलाएँ">♪</button><audio id="bgm" src="music.mp3" preload="none" loop></audio><div id="musicCredit">Music: <a href="https://www.silvermansound.com/free-music/happy-clappy-ukulele" target="_blank" rel="noopener noreferrer">Happy Clappy Ukulele by Shane Ivers</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> (unaltered)</div>
 <div id="door"><div id="dr" class="bx"><div class="lv"><div class="cy"></div><div class="lf"></div><div class="lf r"></div></div>
 <div class="tx"><p style="letter-spacing:.2em">॥ श्री गणेशाय नमः ॥</p><p>सहर्ष आमंत्रित करते हैं</p><h1>यज्ञोपवीत संस्कार</h1><p>एवं मंगल उत्सव</p><p style="margin-top:1cqw">सुगंध परिवार</p></div>
 <div class="ht">✦ द्वार खोलने हेतु स्पर्श करें ✦</div></div></div>
@@ -104,15 +104,11 @@ function sh(){const n=$("gn").value.trim();$("sh2").href="https://wa.me/?text="+
 const cv=$("dl"),x=cv.getContext("2d"),vp=$("vp");let W,H;const rs=()=>{W=cv.width=vp.clientWidth;H=cv.height=vp.clientHeight};rs();addEventListener("resize",rs);
 const P=Array.from({length:45},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.4+.8,v:Math.random()*.6+.25,a:Math.random()*6}));
 (function d(){x.clearRect(0,0,W,H);P.forEach(p=>{p.y+=p.v;p.a+=.03;p.x+=Math.sin(p.a)*.6;if(p.y>H+8){p.y=-8;p.x=Math.random()*W}const pt=p.r>1.8;x.beginPath();x.fillStyle=pt?"rgba(255,150,170,.8)":"rgba(255,225,140,.7)";x.ellipse(p.x,p.y,pt?p.r*2.2:p.r,p.r,p.a,0,7);x.fill()});requestAnimationFrame(d)})();
-/* Original, gentle Indian instrumental melody. It plays only after the guest taps the music button. */
-let A,on=0,master,loopTimer=null,beatIndex=0,nextBeat=0;
-const notes=[523.25,587.33,659.25,783.99,880,783.99,659.25,587.33,659.25,783.99,880,1046.5,880,783.99,659.25,null,587.33,659.25,783.99,880,783.99,659.25,587.33,523.25,523.25,null,587.33,659.25,587.33,523.25,null,null];
-const beat=60/72;
-function flute(freq,at){const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.setValueAtTime(freq,at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(.22,at+.08);g.gain.setValueAtTime(.15,at+beat*.52);g.gain.exponentialRampToValueAtTime(.0001,at+beat*.94);o.connect(g);g.connect(master);o.start(at);o.stop(at+beat)}
-function pluck(freq,at){[1,2.76,5.4].forEach((part,i)=>{const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.setValueAtTime(freq*part,at);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(.11/(i+1),at+.012);g.gain.exponentialRampToValueAtTime(.0001,at+.72);o.connect(g);g.connect(master);o.start(at);o.stop(at+.75)})}
-function stepMusic(){const now=A.currentTime;if(now+0.025<nextBeat)return;const at=now+.035,n=notes[beatIndex];if(n)flute(n,at);if(beatIndex%4===0)pluck(n||523.25,at);beatIndex=(beatIndex+1)%notes.length;nextBeat=at+beat}
-function snd(){try{if(!A){A=new(window.AudioContext||window.webkitAudioContext)();master=A.createGain();master.gain.value=0;master.connect(A.destination);[[130.81,.20],[196,.11],[261.63,.06]].forEach(([hz,vol])=>{const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.value=hz;g.gain.value=vol;o.connect(g);g.connect(master);o.start()})}if(A.state==='suspended')A.resume();on=!on;const btn=$('snd');btn.classList.toggle('on',!!on);btn.setAttribute('aria-pressed',String(!!on));btn.setAttribute('aria-label',on?'संगीत रोकें':'संगीत चलाएँ');btn.title=on?'संगीत रोकें':'संगीत चलाएँ';master.gain.cancelScheduledValues(A.currentTime);master.gain.setTargetAtTime(on?.36:0,A.currentTime,.22);if(on){nextBeat=A.currentTime+.08;stepMusic();loopTimer=setInterval(stepMusic,50)}else{clearInterval(loopTimer);loopTimer=null;beatIndex=0}}catch(e){on=0}}
-$('snd').onclick=snd;/* door opens, camera moves in */
+/* Guest-controlled background music */
+const bgm=$("bgm");bgm.volume=.28;let musicOn=false;
+function setMusic(on){musicOn=on;const b=$("snd");b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));b.setAttribute("aria-label",on?"संगीत रोकें":"संगीत चलाएँ");b.title=on?"संगीत रोकें":"संगीत चलाएँ"}
+async function snd(){if(musicOn){bgm.pause();setMusic(false);return}try{await bgm.play();setMusic(true)}catch(e){setMusic(false)}}
+$("snd").onclick=snd;/* door opens, camera moves in */
 R.style.overflow="hidden";
 $("door").onclick=()=>{const d=$("door");d.classList.add("open");setTimeout(()=>d.classList.add("zoom"),1600);setTimeout(()=>{op=1;R.style.overflow=""},3200);setTimeout(()=>d.classList.add("go"),3300);setTimeout(()=>d.remove(),4600)};
 </script>

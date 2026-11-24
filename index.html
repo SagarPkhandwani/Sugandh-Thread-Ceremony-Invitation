@@ -30,33 +30,40 @@ h1,h2{font:400 7.6cqw/1.3 "Rozha One","Tiro Devanagari Hindi",serif;color:var(--
 .bt{display:inline-block;margin:1cqw;padding:2.4cqw 4.4cqw;border-radius:40px;border:1px solid var(--g);color:var(--m);text-decoration:none;background:rgba(96,22,34,.7);font:inherit;font-size:3.9cqw;cursor:pointer}.bt.p{background:linear-gradient(100deg,#a8740a,#e9c35a,#f7e08a);color:#3a0d0d}
 #cd{display:flex;gap:2cqw;margin:2cqw 0}#cd div{flex:1;border-radius:3cqw;background:linear-gradient(#7a1620,#3d0a10);color:var(--m);padding:2cqw 0}#cd b{display:block;font:400 7cqw/1.2 "Rozha One",serif}#cd small{font-size:3.2cqw;color:#f3dcae}
 input{font:inherit;font-size:4cqw;padding:2.4cqw 4cqw;border-radius:40px;border:1px solid var(--g);text-align:center;width:100%;background:rgba(255,253,245,.93);color:#4a1410}
-#snd{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:30;width:44px;height:44px;border-radius:50%;border:1px solid var(--g);background:#4a0f18d9;color:var(--g);font-size:20px;cursor:pointer}#snd.on{background:var(--g);color:#4a0f18}#musicCredit{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 66px);z-index:31;display:block;width:max-content;max-width:calc(100vw - 84px);padding:5px 8px;border:1px solid rgba(217,180,86,.6);border-radius:10px;background:#4a0f18d9;color:var(--m);font:10px/1.35 Arial,sans-serif;text-decoration:none}#musicCredit a{color:inherit;text-decoration:underline}
-#door{position:fixed;inset:0;z-index:50;background:#2a0e0a;cursor:pointer;transition:opacity 1.2s}#door.go{opacity:0}
-#dr{background:var(--d) center/cover;transform-origin:50% 63%;transition:transform 3s cubic-bezier(.5,0,.3,1)}
-#door.zoom #dr{transform:scale(3.4)}
+#snd{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:30;width:44px;height:44px;border-radius:50%;border:1px solid var(--g);background:#4a0f18d9;color:var(--g);font-size:20px;cursor:pointer}#snd.on{background:var(--g);color:#4a0f18}
+#door{position:fixed;inset:0;z-index:50;background:#2a0e0a;cursor:pointer;transition:opacity 1.1s ease,transform 1.1s ease}
+#door.magic{opacity:0;transform:scale(1.04);pointer-events:none}
+#door.magic::after{content:"✦";position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;color:#fff3b0;font-size:clamp(24px,5vw,62px);text-shadow:-28vw -24vh 0 #fff0a8,-18vw 12vh 1px #ffe7a0,22vw -18vh 1px #fff4c8,30vw 15vh 0 #ffe08a,8vw 28vh 1px #fff1ad,-12vw -30vh 0 #ffe08a,34vw -5vh 1px #fff6cf,-35vw 18vh 0 #ffdf83;animation:magicSpark 1.1s ease-out both}
+@keyframes magicSpark{0%{opacity:0;transform:scale(.72) rotate(-8deg)}24%{opacity:1}100%{opacity:0;transform:scale(1.4) rotate(10deg)}}
+#dr{background:var(--d) center/cover;transform-origin:50% 63%;transition:transform 1.1s ease,filter 1.1s ease}
+#door.magic #dr{transform:scale(1.045);filter:blur(4px) brightness(1.16)}
 .lv{position:absolute;inset:0;perspective:1000px;clip-path:polygon(29% 85%,29% 50%,31% 46%,36.5% 43%,43% 41.2%,50% 40.3%,57% 41.2%,63.5% 43%,69% 46%,71% 50%,71% 85%)}
 .cy{position:absolute;left:29%;top:40%;width:42%;height:45%;background:var(--c) center/cover}
-.lf{position:absolute;top:40%;height:45%;width:21%;left:29%;background:var(--d);background-size:100cqw 100cqh;background-position:-29cqw -40cqh;transform-origin:left;transition:transform 2.5s cubic-bezier(.6,0,.2,1)}
+.lf{position:absolute;top:40%;height:45%;width:21%;left:29%;background:var(--d);background-size:100cqw 100cqh;background-position:-29cqw -40cqh;transform-origin:left;transition:transform 1s ease}
 .lf.r{left:50%;background-position:-50cqw -40cqh;transform-origin:right}
-#door.open .lf{transform:rotateY(-108deg)}#door.open .lf.r{transform:rotateY(108deg)}
-.tx{position:absolute;left:8%;right:8%;top:45%;padding:3cqw 0;text-align:center;font-size:4.3cqw;line-height:1.5;text-shadow:0 2px 8px #000,0 0 16px #000;background:radial-gradient(ellipse,rgba(25,8,4,.62),transparent 72%);transition:opacity .8s}
+.tx{position:absolute;left:8%;right:8%;top:45%;padding:3cqw 0;text-align:center;font-size:4.3cqw;line-height:1.5;text-shadow:0 2px 8px #000,0 0 16px #000;background:radial-gradient(ellipse,rgba(25,8,4,.62),transparent 72%);transition:opacity .35s ease}
 .tx h1{color:var(--m);font-size:9cqw;margin:1cqw 0}.tx p{margin:0}
-.ht{position:absolute;bottom:5%;left:0;right:0;text-align:center;font-size:4.2cqw;text-shadow:0 2px 8px #000,0 0 14px #000;animation:fk 1.6s infinite alternate;transition:opacity .6s}
+.ht{position:absolute;bottom:5%;left:0;right:0;text-align:center;font-size:4.2cqw;text-shadow:0 2px 8px #000,0 0 14px #000;animation:fk 1.6s infinite alternate;transition:opacity .35s ease}
 @keyframes fk{to{opacity:.45}}
-#door.open .tx,#door.open .ht{opacity:0}
-</style>
+#door.magic .tx,#door.magic .ht{opacity:0}
+.mc{margin-top:2cqw;color:rgba(255,230,170,.82);font-size:2.8cqw}
+.mc summary{display:inline-block;cursor:pointer;list-style:none;text-underline-offset:2px}
+.mc summary::-webkit-details-marker{display:none}
+.mc small{display:block;margin-top:1cqw;font-size:2.5cqw}
+.mc a{color:inherit;text-decoration:underline}
+@media(prefers-reduced-motion:reduce){#door,#dr,#door.magic::after{transition-duration:.3s!important;animation-duration:.3s!important}}</style>
 </head>
 <body>
 <div id="bgb"></div><div id="sp"></div>
 <div id="vp" class="bx"><div id="cam"></div><div id="nt"></div><div id="sh"></div><div id="ray"></div><canvas id="dl"></canvas></div>
-<button id="snd" type="button" aria-label="संगीत चलाएँ" aria-pressed="false" title="संगीत चलाएँ">♪</button><audio id="bgm" src="music.mp3" preload="none" loop></audio><div id="musicCredit">Music: <a href="https://www.silvermansound.com/free-music/happy-clappy-ukulele" target="_blank" rel="noopener noreferrer">Happy Clappy Ukulele by Shane Ivers</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> (unaltered)</div>
+<button id="snd" type="button" aria-label="संगीत चलाएँ" aria-pressed="false" title="संगीत चलाएँ">♪</button><audio id="bgm" src="music.mp3" preload="none" loop></audio>
 <div id="door"><div id="dr" class="bx"><div class="lv"><div class="cy"></div><div class="lf"></div><div class="lf r"></div></div>
 <div class="tx"><p style="letter-spacing:.2em">॥ श्री गणेशाय नमः ॥</p><p>सहर्ष आमंत्रित करते हैं</p><h1>यज्ञोपवीत संस्कार</h1><p>एवं मंगल उत्सव</p><p style="margin-top:1cqw">सुगंध परिवार</p></div>
-<div class="ht">✦ द्वार खोलने हेतु स्पर्श करें ✦</div></div></div>
+<div class="ht">✧ आमंत्रण खोलने के लिए स्पर्श करें ✧</div></div></div>
 
 <template id="T">
 <div class="pl"><p class="k">॥ श्री गणेशाय नमः ॥</p><h1>यज्ञोपवीत संस्कार</h1><p>एवं मंगल उत्सव</p><p class="or">❖ ❖ ❖</p><p><b>१२ व १३ दिसंबर २०२६</b> · नागपुर</p><p class="k" style="margin-top:2cqw">⌄ आगे बढ़ने हेतु स्क्रॉल करें</p></div>
-<div class="pl"><h2>सविनय निवेदन</h2><p style="font-size:3.7cqw">स्वर्गीय श्रीमती सत्यभामा एवं श्रीमती पुष्पा (श्री हॉटचंद सुगंध) अपने पौत्रों के यज्ञोपवीत संस्कार में आपको सपरिवार सादर आमंत्रित करते हैं।</p>
+<div class="pl"><h2>सविनय निवेदन</h2><p style="font-size:3.7cqw">स्वर्गीय श्रीमती सत्यभामा एवं श्रीमती पुष्पा (श्री हूटचंद सुगंध) अपने पौत्रों के यज्ञोपवीत संस्कार में आपको सपरिवार सादर आमंत्रित करते हैं।</p>
 <div class="bs"><div><b>चि. निखिल</b><small>काजल–सुरेश सुगंध के सुपुत्र</small></div><div><b>चि. भूषण</b><small>कंचन–सुनील सुगंध के सुपुत्र</small></div><div><b>चि. लग्गुश</b><small>वर्षा–जितेंद्र सुगंध के सुपुत्र</small></div><div><b>चि. कृषिव</b><small>कंचन–सुनील सुगंध के सुपुत्र</small></div><div style="grid-column:span 2"><b>चि. वीरल</b><small>दिशिका–नवीन सुगंध के सुपुत्र</small></div></div></div>
 <div class="pl"><h2>१२ दिसंबर · शनिवार</h2><p class="ev">🌼 मेहंदी<b>दोपहर १:०० बजे से</b></p><p class="vn">📍 <b data-k="hall"></b><br><span data-k="hallLoc"></span></p></div>
 <div class="pl"><h2>१२ दिसंबर · रात्रि</h2><p class="ev">🎶 संगीत संध्या<b>रात्रि ८:०० बजे से</b></p><p class="ev">🙏 श्री श्याम भजन<b>रात्रि</b></p><p class="vn">📍 <b data-k="hall"></b><br><span data-k="hallLoc"></span></p></div>
@@ -65,7 +72,7 @@ input{font:inherit;font-size:4cqw;padding:2.4cqw 4cqw;border-radius:40px;border:
 <div class="pl"><h2>पधारिए</h2><p class="vn" style="border:0;margin:0"><b data-k="hall"></b> · <span data-k="hallLoc"></span><br>१२ दिसंबर<br><a id="m1" class="bt p" target="_blank" rel="noopener">📍 मार्ग</a><a id="c1" class="bt" target="_blank" rel="noopener">📅 कैलेंडर</a></p><p class="vn"><b data-k="lawn"></b> · <span data-k="lawnLoc"></span><br>१३ दिसंबर<br><a id="m2" class="bt p" target="_blank" rel="noopener">📍 मार्ग</a><a id="c2" class="bt" target="_blank" rel="noopener">📅 कैलेंडर</a></p></div>
 <div class="pl"><h2>शुभ घड़ी में शेष</h2><div id="cd"></div><a id="rs" class="bt p" target="_blank" rel="noopener">🙏 उपस्थिति बताएँ</a>
 <p class="vn"><input id="gn" placeholder="अतिथि का नाम लिखें"><a id="sh2" class="bt" target="_blank" rel="noopener">📲 WhatsApp पर भेजें</a></p>
-<p class="vn"><b>सुगंध परिवार आपकी प्रतीक्षा में</b><br><small>(पमनदास देवमल एंड संस)</small></p></div>
+<p class="vn"><b>सुगंध परिवार आपकी प्रतीक्षा में</b><br><small>(पमनदास देवमल)</small></p><details class="mc"><summary>♪ संगीत श्रेय</summary><small>“Happy Clappy Ukulele” by Shane Ivers — <a href="https://www.silvermansound.com/free-music/happy-clappy-ukulele" target="_blank" rel="noopener noreferrer">track details</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Used unaltered.</small></details></div>
 </template>
 
 <script>
@@ -110,7 +117,7 @@ function setMusic(on){musicOn=on;const b=$("snd");b.classList.toggle("on",on);b.
 async function snd(){if(musicOn){bgm.pause();setMusic(false);return}try{await bgm.play();setMusic(true)}catch(e){setMusic(false)}}
 $("snd").onclick=snd;/* door opens, camera moves in */
 R.style.overflow="hidden";
-$("door").onclick=()=>{const d=$("door");d.classList.add("open");setTimeout(()=>d.classList.add("zoom"),1600);setTimeout(()=>{op=1;R.style.overflow=""},3200);setTimeout(()=>d.classList.add("go"),3300);setTimeout(()=>d.remove(),4600)};
+$("door").onclick=()=>{const d=$("door");d.classList.add("magic");setTimeout(()=>{op=1;R.style.overflow=""},380);setTimeout(()=>d.remove(),1150)};
 </script>
 </body>
 </html>

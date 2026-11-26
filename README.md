@@ -1,13 +1,14 @@
-# Sugandh Family Invitation – 12 & 13 Dec 2026, Nagpur
+# Sugandh Family Invitation — 13 Dec 2026, Nagpur
 
-Royal-palace animated invitation (Hindi). Single file: `index.html`.
+Royal-palace animated invitation in Hindi, focused on the events taking place on 13 December 2026. The site is a single-page `index.html` with background music in `music.mp3`.
 
 ## Edit
-- Venue names, map links, WhatsApp number: the `const C={...}` block near the bottom of `index.html`.
-- Names, timings, programme text: the Hindi text inside `<template id="T">` (one `.pl` block per scene).
-- On GitHub: open `index.html` -> pencil icon -> edit -> Commit changes. The site updates in about a minute.
 
-## Publish for guests (GitHub Pages)
-1. Create a new public repo (e.g. `sugandh-invitation`) and upload these files.
-2. Settings -> Pages -> Source: "Deploy from a branch" -> `main` / `(root)` -> Save.
-3. Share `https://<your-username>.github.io/sugandh-invitation/` with guests.
+- Venue name, map link and WhatsApp settings are in the `const C` block near the bottom of `index.html`.
+- Names, timings and programme text are in the Hindi content inside `<template id="T">` (one `.pl` block per scene).
+
+## Live site
+
+https://sagarpkhandwani.github.io/Sugandh-Thread-Ceremony-Invitation/
+
+GitHub Pages serves the repository's `main` branch from the repository root.
